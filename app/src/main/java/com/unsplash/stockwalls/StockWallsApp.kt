@@ -5,10 +5,10 @@ import android.content.Context
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class HiltSample : Application() {
+class StockWallsApp : Application() {
 
     companion object {
-        lateinit var application: HiltSample
+        lateinit var application: StockWallsApp
 
         val context: Context
             get() = application.applicationContext

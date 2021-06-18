@@ -27,7 +27,7 @@ class MainViewModel @Inject constructor(
 
     private val _photoFetchEvent = MutableStateFlow<PhotoFetchEvent>(PhotoFetchEvent.Empty)
     val photoFetchEvent: StateFlow<PhotoFetchEvent> = _photoFetchEvent
-    var currentPage = 0
+    var currentPage = 1
 
     fun fetchPhotosByPage(pageNo: Int) {
         viewModelScope.launch(dispatchers.io) {

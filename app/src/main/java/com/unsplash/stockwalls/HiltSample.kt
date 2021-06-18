@@ -1,4 +1,4 @@
-package com.abhishek.daggerhilt
+package com.unsplash.stockwalls
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

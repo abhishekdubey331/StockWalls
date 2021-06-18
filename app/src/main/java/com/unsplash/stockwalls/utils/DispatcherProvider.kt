@@ -1,4 +1,4 @@
-package com.abhishek.daggerhilt.utils
+package com.unsplash.stockwalls.utils
 
 import kotlinx.coroutines.CoroutineDispatcher
 

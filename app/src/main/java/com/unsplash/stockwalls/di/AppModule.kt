@@ -1,21 +1,24 @@
-package com.abhishek.daggerhilt.di
+package com.unsplash.stockwalls.di
 
-import com.abhishek.daggerhilt.repository.DefaultMainRepository
-import com.abhishek.daggerhilt.repository.MainRepository
-import com.abhishek.daggerhilt.utils.DispatcherProvider
+import com.unsplash.stockwalls.BuildConfig
+import com.unsplash.stockwalls.repository.DefaultMainRepository
+import com.unsplash.stockwalls.repository.MainRepository
+import com.unsplash.stockwalls.utils.DispatcherProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
-private const val BASE_URL = "https://run.mocky.io/v3/"
+private const val BASE_URL = "https://api.unsplash.com/"
+private const val AUTHORIZATION = "Authorization"
 
 @InstallIn(SingletonComponent::class)
 @Module
@@ -27,7 +30,6 @@ object AppModule {
         okHttpClient = createHttpClient(),
         baseUrl = BASE_URL
     )
-
 
     @Singleton
     @Provides
@@ -51,7 +53,11 @@ object AppModule {
         logging.level = HttpLoggingInterceptor.Level.BODY
         return OkHttpClient.Builder()
             .addInterceptor(logging)
-            .build()
+            .addInterceptor(Interceptor { chain ->
+                val builder = chain.request().newBuilder()
+                builder.header(AUTHORIZATION, BuildConfig.ACCESS_KEY)
+                return@Interceptor chain.proceed(builder.build())
+            }).build()
     }
 
     private inline fun <reified T> createWebService(

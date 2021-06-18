@@ -10,7 +10,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.abhishek.daggerhilt"
+        applicationId "com.unsplash.stockwalls"
         minSdkVersion 16
         targetSdkVersion 30
         versionCode 1

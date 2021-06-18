@@ -1,11 +1,11 @@
-package com.abhishek.daggerhilt.di
+package com.unsplash.stockwalls.di
 
-import com.abhishek.daggerhilt.data.UserResponse
+import com.unsplash.stockwalls.data.UnsplashPhoto
 import retrofit2.Response
 import retrofit2.http.GET
 
 interface ApiInterface {
 
-    @GET("dd7fae26-4511-4dbc-a93b-8b03b8686ecf")
-    suspend fun getUsers(): Response<UserResponse>
+    @GET("photos?page=1")
+    suspend fun getPhotoList(): Response<UnsplashPhoto>
 }

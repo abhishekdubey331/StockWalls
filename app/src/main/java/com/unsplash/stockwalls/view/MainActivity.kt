@@ -1,4 +1,4 @@
-package com.abhishek.daggerhilt.view
+package com.unsplash.stockwalls.view
 
 import android.graphics.Color
 import android.os.Bundle
@@ -6,7 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
-import com.abhishek.daggerhilt.databinding.ActivityMainBinding
+import com.unsplash.stockwalls.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -24,23 +24,22 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.fetchUsers()
 
         lifecycleScope.launchWhenStarted {
-            mainViewModel.userFetchEvent.collect { event ->
+            mainViewModel.photoFetchEvent.collect { event ->
                 when (event) {
 
-                    is MainViewModel.UserFetchEvent.Success -> {
+                    is MainViewModel.PhotoFetchEvent.Success -> {
                         binding.progressBar.isVisible = false
                         binding.hiltTextView.setTextColor(Color.BLACK)
-                        binding.hiltTextView.text =
-                            event.user?.first_name?.plus(" ${event.user.last_name}")
+                        binding.hiltTextView.text = event.unsplashPhoto?.first()?.id
                     }
 
-                    is MainViewModel.UserFetchEvent.Failure -> {
+                    is MainViewModel.PhotoFetchEvent.Failure -> {
                         binding.progressBar.isVisible = false
                         binding.hiltTextView.setTextColor(Color.RED)
                         binding.hiltTextView.text = event.errorText
                     }
 
-                    is MainViewModel.UserFetchEvent.Loading -> {
+                    is MainViewModel.PhotoFetchEvent.Loading -> {
                         binding.progressBar.isVisible = true
                     }
 

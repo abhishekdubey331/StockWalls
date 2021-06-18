@@ -1,17 +1,17 @@
-package com.abhishek.daggerhilt.repository
+package com.unsplash.stockwalls.repository
 
-import com.abhishek.daggerhilt.data.UserResponse
-import com.abhishek.daggerhilt.di.ApiInterface
-import com.abhishek.daggerhilt.utils.Resource
+import com.unsplash.stockwalls.data.UnsplashPhoto
+import com.unsplash.stockwalls.di.ApiInterface
+import com.unsplash.stockwalls.utils.Resource
 import javax.inject.Inject
 
 class DefaultMainRepository @Inject constructor(
     private val currencyApi: ApiInterface
 ) : MainRepository {
 
-    override suspend fun getUsers(): Resource<UserResponse> {
+    override suspend fun getPhotoList(): Resource<UnsplashPhoto> {
         return try {
-            val response = currencyApi.getUsers()
+            val response = currencyApi.getPhotoList()
             val result = response.body()
             if (response.isSuccessful && result != null) {
                 Resource.Success(result)
@@ -19,7 +19,7 @@ class DefaultMainRepository @Inject constructor(
                 Resource.Error(response.message())
             }
         } catch (e: Exception) {
-            Resource.Error(e.message ?: "An error occured")
+            Resource.Error(e.message ?: "An error occurred")
         }
     }
 }

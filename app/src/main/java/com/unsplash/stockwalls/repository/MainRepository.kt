@@ -1,8 +1,8 @@
-package com.abhishek.daggerhilt.repository
+package com.unsplash.stockwalls.repository
 
-import com.abhishek.daggerhilt.data.UserResponse
-import com.abhishek.daggerhilt.utils.Resource
+import com.unsplash.stockwalls.data.UnsplashPhoto
+import com.unsplash.stockwalls.utils.Resource
 
 interface MainRepository {
-    suspend fun getUsers(): Resource<UserResponse>
+    suspend fun getPhotoList(): Resource<UnsplashPhoto>
 }

@@ -1,11 +1,11 @@
-package com.abhishek.daggerhilt.view
+package com.unsplash.stockwalls.view
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.abhishek.daggerhilt.data.User
-import com.abhishek.daggerhilt.repository.MainRepository
-import com.abhishek.daggerhilt.utils.DispatcherProvider
-import com.abhishek.daggerhilt.utils.Resource
+import com.unsplash.stockwalls.data.UnsplashPhoto
+import com.unsplash.stockwalls.repository.MainRepository
+import com.unsplash.stockwalls.utils.DispatcherProvider
+import com.unsplash.stockwalls.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,29 +16,29 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val repository: MainRepository,
     private val dispatchers: DispatcherProvider,
-): ViewModel() {
+) : ViewModel() {
 
-    sealed class UserFetchEvent {
-        class Success(val user: User?) : UserFetchEvent()
-        class Failure(val errorText: String) : UserFetchEvent()
-        object Loading : UserFetchEvent()
-        object Empty : UserFetchEvent()
+    sealed class PhotoFetchEvent {
+        class Success(val unsplashPhoto: UnsplashPhoto?) : PhotoFetchEvent()
+        class Failure(val errorText: String) : PhotoFetchEvent()
+        object Loading : PhotoFetchEvent()
+        object Empty : PhotoFetchEvent()
     }
 
-    private val _userFetchEvent = MutableStateFlow<UserFetchEvent>(UserFetchEvent.Empty)
-    val userFetchEvent: StateFlow<UserFetchEvent> = _userFetchEvent
+    private val _photoFetchEvent = MutableStateFlow<PhotoFetchEvent>(PhotoFetchEvent.Empty)
+    val photoFetchEvent: StateFlow<PhotoFetchEvent> = _photoFetchEvent
 
     fun fetchUsers() {
         viewModelScope.launch(dispatchers.io) {
-            _userFetchEvent.value = UserFetchEvent.Loading
-            when (val userResponse = repository.getUsers()) {
+            _photoFetchEvent.value = PhotoFetchEvent.Loading
+            when (val photoResponse = repository.getPhotoList()) {
                 is Resource.Error -> {
-                    _userFetchEvent.value =
-                        UserFetchEvent.Failure(userResponse.message ?: "Something Went Wrong")
+                    _photoFetchEvent.value =
+                        PhotoFetchEvent.Failure(photoResponse.message ?: "Something Went Wrong")
                 }
                 is Resource.Success -> {
-                    val user = userResponse.data?.data?.firstOrNull()
-                    _userFetchEvent.value = UserFetchEvent.Success(user)
+                    val photoList = photoResponse.data
+                    _photoFetchEvent.value = PhotoFetchEvent.Success(photoList)
                 }
             }
         }

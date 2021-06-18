@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.unsplash.stockwalls.adapter.PhotoAdapter
 import com.unsplash.stockwalls.adapter.PhotoItemClicked
 import com.unsplash.stockwalls.data.UnsplashPhotoItem
-import com.unsplash.stockwalls.databinding.ActivityMainBinding
+import com.unsplash.stockwalls.databinding.ActivityPhotoListBinding
 import com.unsplash.stockwalls.utils.OnLoadMoreListener
 import com.unsplash.stockwalls.utils.RecyclerViewLoadMoreScroll
 import com.unsplash.stockwalls.utils.toast
@@ -22,9 +22,9 @@ const val VIEW_TYPE_LOADING = 1
 const val SPAN_SIZE = 2
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), PhotoItemClicked {
+class PhotoListActivity : AppCompatActivity(), PhotoItemClicked {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityPhotoListBinding
     private val photoListViewModel: PhotoListViewModel by viewModels()
     private lateinit var mAdapter: PhotoAdapter
     private lateinit var scrollListener: RecyclerViewLoadMoreScroll
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity(), PhotoItemClicked {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityPhotoListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         mAdapter = PhotoAdapter(this)
         setRVLayoutManager()

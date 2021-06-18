@@ -6,12 +6,12 @@ import com.unsplash.stockwalls.utils.Resource
 import javax.inject.Inject
 
 class DefaultMainRepository @Inject constructor(
-    private val currencyApi: ApiInterface
+    private val unsplashApi: ApiInterface
 ) : MainRepository {
 
-    override suspend fun getPhotoList(): Resource<UnsplashPhoto> {
+    override suspend fun getPhotoList(pageNo: Int): Resource<UnsplashPhoto> {
         return try {
-            val response = currencyApi.getPhotoList()
+            val response = unsplashApi.getPhotoList(pageNo)
             val result = response.body()
             if (response.isSuccessful && result != null) {
                 Resource.Success(result)

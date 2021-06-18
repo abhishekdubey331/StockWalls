@@ -27,11 +27,13 @@ class MainViewModel @Inject constructor(
 
     private val _photoFetchEvent = MutableStateFlow<PhotoFetchEvent>(PhotoFetchEvent.Empty)
     val photoFetchEvent: StateFlow<PhotoFetchEvent> = _photoFetchEvent
+    var currentPage = 0
 
-    fun fetchUsers() {
+    fun fetchPhotosByPage(pageNo: Int) {
         viewModelScope.launch(dispatchers.io) {
             _photoFetchEvent.value = PhotoFetchEvent.Loading
-            when (val photoResponse = repository.getPhotoList()) {
+            currentPage++
+            when (val photoResponse = repository.getPhotoList(pageNo)) {
                 is Resource.Error -> {
                     _photoFetchEvent.value =
                         PhotoFetchEvent.Failure(photoResponse.message ?: "Something Went Wrong")

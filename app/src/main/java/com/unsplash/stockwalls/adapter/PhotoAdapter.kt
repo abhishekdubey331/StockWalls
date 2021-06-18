@@ -7,39 +7,91 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.unsplash.stockwalls.R
 import com.unsplash.stockwalls.data.UnsplashPhotoItem
+import com.unsplash.stockwalls.utils.loadImage
+
+const val PAGE_SIZE = 10
+const val VIEW_TYPE_ITEM = 0
+const val VIEW_TYPE_LOADING = 1
 
 class PhotoAdapter(private val listener: PhotoItemClicked) :
-    ListAdapter<UnsplashPhotoItem, PhotoAdapter.PhotoViewHolder>(DIFF_CALLBACK) {
+    ListAdapter<UnsplashPhotoItem, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
-    private val items: MutableList<UnsplashPhotoItem> = mutableListOf()
+    private val photosList: MutableList<UnsplashPhotoItem?> = mutableListOf()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_photo, parent, false)
-        val viewHolder = PhotoViewHolder(view)
-        view.setOnClickListener {
-            listener.onItemClicked(items[viewHolder.adapterPosition])
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+
+        when (viewType) {
+            VIEW_TYPE_ITEM -> {
+                val view =
+                    LayoutInflater.from(parent.context).inflate(R.layout.item_photo, parent, false)
+                val viewHolder = PhotoViewHolder(view)
+                view.setOnClickListener {
+                    listener.onItemClicked(photosList[viewHolder.adapterPosition])
+                }
+                return viewHolder
+            }
+            VIEW_TYPE_LOADING -> {
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.progress_loading, parent, false)
+                return LoadingViewHolder(view)
+            }
+            else -> {
+                val view =
+                    LayoutInflater.from(parent.context).inflate(R.layout.item_photo, parent, false)
+                val viewHolder = PhotoViewHolder(view)
+                view.setOnClickListener {
+                    listener.onItemClicked(photosList[viewHolder.adapterPosition])
+                }
+                return viewHolder
+            }
         }
-        return viewHolder
     }
 
-    override fun getItemCount() = items.size
+    override fun getItemCount() = photosList.size
 
-    override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
-        val currentItem = items[position]
-        holder.photoImageView.load(currentItem.urls.small)
+    override fun getItemViewType(position: Int): Int {
+        return if (photosList[position] == null) {
+            VIEW_TYPE_LOADING
+        } else {
+            VIEW_TYPE_ITEM
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder) {
+            is PhotoViewHolder -> {
+                val currentItem = photosList[position]
+                holder.photoImageView.loadImage(currentItem?.urls?.small ?: "")
+            }
+        }
     }
 
     class PhotoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val photoImageView: AppCompatImageView = itemView.findViewById(R.id.photoImv)
     }
 
-    fun updatePhotos(updatedNews: MutableList<UnsplashPhotoItem>) {
-        items.clear()
-        items.addAll(updatedNews)
-        notifyDataSetChanged()
+    class LoadingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+
+    fun submitList(paginatedData: List<UnsplashPhotoItem>, page: Int) {
+        photosList.addAll(paginatedData)
+        if (photosList.isEmpty())
+            notifyDataSetChanged()
+        else
+            notifyItemRangeInserted(PAGE_SIZE * page, paginatedData.size)
+    }
+
+    fun addLoadingView() {
+        photosList.add(null)
+        notifyItemInserted(photosList.size - 1)
+    }
+
+    fun removeLoadingView() {
+        if (photosList.isNotEmpty()) {
+            photosList.removeAt(photosList.size - 1)
+            notifyItemRemoved(photosList.size)
+        }
     }
 
     companion object {
@@ -59,5 +111,5 @@ class PhotoAdapter(private val listener: PhotoItemClicked) :
 }
 
 interface PhotoItemClicked {
-    fun onItemClicked(item: UnsplashPhotoItem)
+    fun onItemClicked(item: UnsplashPhotoItem?)
 }

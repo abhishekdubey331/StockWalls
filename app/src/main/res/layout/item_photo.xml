@@ -10,7 +10,6 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/photoImv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true" />
+        android:layout_height="200dp" />
 
 </androidx.cardview.widget.CardView>

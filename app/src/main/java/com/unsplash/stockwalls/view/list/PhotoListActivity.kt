@@ -46,7 +46,6 @@ class PhotoListActivity : AppCompatActivity(), PhotoItemClicked {
                         event.unsplashPhoto?.toMutableList()?.let {
                             mAdapter.removeLoadingView()
                             mAdapter.submitData(it)
-                            photoListViewModel.currentPage
                             binding.recyclerView.post {
                                 mAdapter.notifyAdapter(photoListViewModel.currentPage, it.size)
                                 binding.progressBar.isVisible = false

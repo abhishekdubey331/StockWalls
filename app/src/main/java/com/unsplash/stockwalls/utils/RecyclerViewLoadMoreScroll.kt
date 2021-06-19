@@ -15,10 +15,6 @@ class RecyclerViewLoadMoreScroll : RecyclerView.OnScrollListener {
     private var totalItemCount: Int = 0
     private var mLayoutManager: RecyclerView.LayoutManager
 
-    fun setLoaded() {
-        isLoading = false
-    }
-
     fun getLoaded(): Boolean {
         return isLoading
     }
@@ -49,15 +45,21 @@ class RecyclerViewLoadMoreScroll : RecyclerView.OnScrollListener {
 
         totalItemCount = mLayoutManager.itemCount
 
-        if (mLayoutManager is StaggeredGridLayoutManager) {
-            val lastVisibleItemPositions =
-                (mLayoutManager as StaggeredGridLayoutManager).findLastVisibleItemPositions(null)
-            // get maximum element within the list
-            lastVisibleItem = getLastVisibleItem(lastVisibleItemPositions)
-        } else if (mLayoutManager is GridLayoutManager) {
-            lastVisibleItem = (mLayoutManager as GridLayoutManager).findLastVisibleItemPosition()
-        } else if (mLayoutManager is LinearLayoutManager) {
-            lastVisibleItem = (mLayoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+        when (mLayoutManager) {
+            is StaggeredGridLayoutManager -> {
+                val lastVisibleItemPositions =
+                    (mLayoutManager as StaggeredGridLayoutManager).findLastVisibleItemPositions(null)
+                // get maximum element within the list
+                lastVisibleItem = getLastVisibleItem(lastVisibleItemPositions)
+            }
+            is GridLayoutManager -> {
+                lastVisibleItem =
+                    (mLayoutManager as GridLayoutManager).findLastVisibleItemPosition()
+            }
+            is LinearLayoutManager -> {
+                lastVisibleItem =
+                    (mLayoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+            }
         }
 
         if (!isLoading && totalItemCount <= lastVisibleItem + visibleThreshold) {

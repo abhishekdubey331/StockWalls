@@ -5,8 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import coil.load
+import coil.size.Scale
 import com.unsplash.stockwalls.StockWallsApp
 
 fun String.toast(duration: Int = Toast.LENGTH_SHORT): Toast {
@@ -14,20 +14,13 @@ fun String.toast(duration: Int = Toast.LENGTH_SHORT): Toast {
 }
 
 fun AppCompatImageView.loadImage(imageUrl: String, fastLoadUrl: String) {
-    Glide.with(StockWallsApp.context).load(imageUrl)
-        .centerCrop()
-        .transition(DrawableTransitionOptions.withCrossFade())
-        .thumbnail(
-            Glide.with(StockWallsApp.context)
-                .load(fastLoadUrl)
-                .centerCrop()
-        )
-        .into(this)
+    this.load(imageUrl) {
+       scale(Scale.FIT)
+    }
 }
 
 fun AppCompatImageView.loadFullImage(imageUrl: String, fastLoadUrl: String) {
-    Glide.with(StockWallsApp.context).load(imageUrl)
-        .into(this)
+    this.load(imageUrl)
 }
 
 fun <T> Context.openActivity(it: Class<T>, extras: Bundle.() -> Unit = {}) {

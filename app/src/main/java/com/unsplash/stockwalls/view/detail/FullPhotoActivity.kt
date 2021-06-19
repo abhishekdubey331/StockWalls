@@ -22,7 +22,6 @@ class FullPhotoActivity : AppCompatActivity() {
         binding = ActivityFullPhotoBinding.inflate(layoutInflater)
         setContentView(binding.root)
         transparentStatusBar()
-
         val data = intent.extras
         val unsplashPhoto = data?.getParcelable<Parcelable>(PHOTO_KEY) as UnsplashPhotoItem?
         binding.fullPhotoImv.loadImage(

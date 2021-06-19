@@ -8,8 +8,10 @@ import android.os.Bundle
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.app.ActivityOptionsCompat
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.unsplash.stockwalls.R
 import com.unsplash.stockwalls.StockWallsApp
 import com.unsplash.stockwalls.view.detail.FullPhotoActivity
 
@@ -17,22 +19,27 @@ fun String.toast(duration: Int = Toast.LENGTH_SHORT): Toast {
     return Toast.makeText(StockWallsApp.context, this, duration).apply { show() }
 }
 
-fun AppCompatImageView.loadImage(imageUrl: String, fastLoadUrl: String) {
+fun AppCompatImageView.loadImageWithPlaceholder(imageUrl: String) {
     Glide.with(StockWallsApp.context).load(imageUrl)
-        .centerCrop()
-        .transition(DrawableTransitionOptions.withCrossFade())
-        .thumbnail(
-            Glide.with(StockWallsApp.context)
-                .load(fastLoadUrl)
-                .centerCrop()
-        )
+        .diskCacheStrategy(DiskCacheStrategy.ALL)
+        .placeholder(R.drawable.placeholder)
         .into(this)
 }
 
-fun <T> Context.openActivity(it: Class<T>, extras: Bundle.() -> Unit = {}) {
+fun AppCompatImageView.loadImage(imageUrl: String) {
+    Glide.with(StockWallsApp.context).load(imageUrl)
+        .diskCacheStrategy(DiskCacheStrategy.ALL)
+        .into(this)
+}
+
+fun <T> Context.openActivity(
+    it: Class<T>,
+    options: ActivityOptionsCompat,
+    extras: Bundle.() -> Unit = {},
+) {
     val intent = Intent(this, it)
     intent.putExtras(Bundle().apply(extras))
-    startActivity(intent)
+    startActivity(intent, options.toBundle())
 }
 
 fun FullPhotoActivity.transparentStatusBar() {

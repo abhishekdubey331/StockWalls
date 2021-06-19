@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.unsplash.stockwalls.R
 import com.unsplash.stockwalls.data.UnsplashPhotoItem
-import com.unsplash.stockwalls.utils.loadImage
+import com.unsplash.stockwalls.utils.loadImageWithPlaceholder
 
 const val PAGE_SIZE = 10
 const val VIEW_TYPE_ITEM = 0
@@ -28,7 +28,10 @@ class PhotoAdapter(private val listener: PhotoItemClicked) :
                     LayoutInflater.from(parent.context).inflate(R.layout.item_photo, parent, false)
                 val viewHolder = PhotoViewHolder(view)
                 view.setOnClickListener {
-                    listener.onItemClicked(photosList[viewHolder.adapterPosition])
+                    listener.onItemClicked(
+                        photosList[viewHolder.adapterPosition],
+                        viewHolder.photoImageView
+                    )
                 }
                 return viewHolder
             }
@@ -42,7 +45,10 @@ class PhotoAdapter(private val listener: PhotoItemClicked) :
                     LayoutInflater.from(parent.context).inflate(R.layout.item_photo, parent, false)
                 val viewHolder = PhotoViewHolder(view)
                 view.setOnClickListener {
-                    listener.onItemClicked(photosList[viewHolder.adapterPosition])
+                    listener.onItemClicked(
+                        photosList[viewHolder.adapterPosition],
+                        viewHolder.photoImageView
+                    )
                 }
                 return viewHolder
             }
@@ -63,8 +69,8 @@ class PhotoAdapter(private val listener: PhotoItemClicked) :
         when (holder) {
             is PhotoViewHolder -> {
                 val currentItem = photosList[position]
-                holder.photoImageView.loadImage(
-                    currentItem?.urls?.small ?: "", currentItem?.urls?.thumb ?: ""
+                holder.photoImageView.loadImageWithPlaceholder(
+                    currentItem?.urls?.regular ?: ""
                 )
             }
         }
@@ -116,5 +122,5 @@ class PhotoAdapter(private val listener: PhotoItemClicked) :
 }
 
 interface PhotoItemClicked {
-    fun onItemClicked(item: UnsplashPhotoItem?)
+    fun onItemClicked(item: UnsplashPhotoItem?, appCompatImageView: AppCompatImageView)
 }

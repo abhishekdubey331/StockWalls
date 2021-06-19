@@ -24,11 +24,10 @@ class FullPhotoActivity : AppCompatActivity() {
         val data = intent.extras
         val unsplashPhoto = data?.getParcelable<Parcelable>(PHOTO_KEY) as UnsplashPhotoItem?
         binding.fullPhotoImv.loadImage(
-            unsplashPhoto?.urls?.full ?: "",
-            unsplashPhoto?.urls?.small ?: ""
+            unsplashPhoto?.urls?.regular ?: ""
         )
         binding.backButton.setOnClickListener {
-            finish()
+            supportFinishAfterTransition()
         }
     }
 }

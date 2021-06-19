@@ -11,6 +11,8 @@
         android:id="@+id/photoImv"
         android:layout_width="match_parent"
         android:layout_height="@dimen/listImageHeight"
-        android:scaleType="centerCrop" />
+        android:background="@color/colorPrimary"
+        android:scaleType="centerCrop"
+        android:transitionName="@string/app_name" />
 
 </androidx.cardview.widget.CardView>

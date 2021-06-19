@@ -3,10 +3,13 @@ package com.unsplash.stockwalls.view.list
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.unsplash.stockwalls.R
 import com.unsplash.stockwalls.adapter.PhotoAdapter
 import com.unsplash.stockwalls.adapter.PhotoItemClicked
 import com.unsplash.stockwalls.data.UnsplashPhotoItem
@@ -17,6 +20,7 @@ import com.unsplash.stockwalls.utils.openActivity
 import com.unsplash.stockwalls.view.detail.FullPhotoActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+
 
 const val VIEW_TYPE_ITEM = 0
 const val VIEW_TYPE_LOADING = 1
@@ -95,8 +99,13 @@ class PhotoListActivity : AppCompatActivity(), PhotoItemClicked {
         binding.recyclerView.addOnScrollListener(scrollListener)
     }
 
-    override fun onItemClicked(item: UnsplashPhotoItem?) {
-        openActivity(FullPhotoActivity::class.java) {
+    override fun onItemClicked(item: UnsplashPhotoItem?, imageView: AppCompatImageView) {
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+            this,
+            imageView,
+            getString(R.string.app_name)
+        )
+        openActivity(FullPhotoActivity::class.java, options) {
             putParcelable(FullPhotoActivity.PHOTO_KEY, item)
         }
     }

@@ -2,8 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    android:orientation="horizontal">
+    android:background="@color/colorPrimary">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/back_button"
@@ -20,23 +19,12 @@
         android:id="@+id/fullPhotoImv"
         android:layout_width="@dimen/zeroDp"
         android:layout_height="@dimen/zeroDp"
+        android:scaleType="centerCrop"
         android:adjustViewBounds="true"
-        android:elevation="@dimen/oneDp"
-        android:scaleType="fitXY"
+        android:transitionName="@string/app_name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:indeterminateDrawable="@drawable/progress_bg"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

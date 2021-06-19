@@ -1,4 +1,4 @@
-package com.unsplash.stockwalls.view
+package com.unsplash.stockwalls.view.list
 
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -13,7 +13,8 @@ import com.unsplash.stockwalls.data.UnsplashPhotoItem
 import com.unsplash.stockwalls.databinding.ActivityPhotoListBinding
 import com.unsplash.stockwalls.utils.OnLoadMoreListener
 import com.unsplash.stockwalls.utils.RecyclerViewLoadMoreScroll
-import com.unsplash.stockwalls.utils.toast
+import com.unsplash.stockwalls.utils.openActivity
+import com.unsplash.stockwalls.view.detail.FullPhotoActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -44,9 +45,13 @@ class PhotoListActivity : AppCompatActivity(), PhotoItemClicked {
                     is PhotoListViewModel.PhotoFetchEvent.Success -> {
                         event.unsplashPhoto?.toMutableList()?.let {
                             mAdapter.removeLoadingView()
-                            mAdapter.submitList(it, photoListViewModel.currentPage)
-                            binding.progressBar.isVisible = false
-                            setRVScrollListener()
+                            mAdapter.submitData(it)
+                            photoListViewModel.currentPage
+                            binding.recyclerView.post {
+                                mAdapter.notifyAdapter(photoListViewModel.currentPage, it.size)
+                                binding.progressBar.isVisible = false
+                                setRVScrollListener()
+                            }
                         }
                     }
                     is PhotoListViewModel.PhotoFetchEvent.Failure -> {
@@ -84,7 +89,7 @@ class PhotoListActivity : AppCompatActivity(), PhotoItemClicked {
         scrollListener = RecyclerViewLoadMoreScroll(mLayoutManager as GridLayoutManager)
         scrollListener.setOnLoadMoreListener(object : OnLoadMoreListener {
             override fun onLoadMore() {
-                mAdapter.addLoadingView()
+                binding.recyclerView.post { mAdapter.addLoadingView() }
                 photoListViewModel.fetchPhotosByPage(photoListViewModel.currentPage)
             }
         })
@@ -92,6 +97,8 @@ class PhotoListActivity : AppCompatActivity(), PhotoItemClicked {
     }
 
     override fun onItemClicked(item: UnsplashPhotoItem?) {
-        item?.urls?.small?.toast()
+        openActivity(FullPhotoActivity::class.java) {
+            putParcelable(FullPhotoActivity.PHOTO_KEY, item)
+        }
     }
 }

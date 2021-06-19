@@ -12,7 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DaggerHilt">
-        <activity android:name=".view.PhotoListActivity">
+
+        <activity android:name=".view.detail.FullPhotoActivity" />
+
+        <activity android:name=".view.list.PhotoListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

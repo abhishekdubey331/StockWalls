@@ -63,7 +63,9 @@ class PhotoAdapter(private val listener: PhotoItemClicked) :
         when (holder) {
             is PhotoViewHolder -> {
                 val currentItem = photosList[position]
-                holder.photoImageView.loadImage(currentItem?.urls?.small ?: "")
+                holder.photoImageView.loadImage(
+                    currentItem?.urls?.small ?: "", currentItem?.urls?.thumb ?: ""
+                )
             }
         }
     }
@@ -74,12 +76,15 @@ class PhotoAdapter(private val listener: PhotoItemClicked) :
 
     class LoadingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-    fun submitList(paginatedData: List<UnsplashPhotoItem>, page: Int) {
+    fun submitData(paginatedData: List<UnsplashPhotoItem>) {
         photosList.addAll(paginatedData)
+    }
+
+    fun notifyAdapter(page: Int, pageSize: Int) {
         if (photosList.isEmpty())
             notifyDataSetChanged()
         else
-            notifyItemRangeInserted(PAGE_SIZE * page, paginatedData.size)
+            notifyItemRangeInserted(PAGE_SIZE * page, pageSize)
     }
 
     fun addLoadingView() {

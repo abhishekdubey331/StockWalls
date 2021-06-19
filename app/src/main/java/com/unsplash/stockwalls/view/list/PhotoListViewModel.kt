@@ -1,4 +1,4 @@
-package com.unsplash.stockwalls.view
+package com.unsplash.stockwalls.view.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

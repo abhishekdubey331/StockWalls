@@ -12,7 +12,7 @@ class RecyclerViewLoadMoreScroll : RecyclerView.OnScrollListener {
     private lateinit var mOnLoadMoreListener: OnLoadMoreListener
     private var isLoading: Boolean = false
     private var lastVisibleItem: Int = 0
-    private var totalItemCount:Int = 0
+    private var totalItemCount: Int = 0
     private var mLayoutManager: RecyclerView.LayoutManager
 
     fun setLoaded() {

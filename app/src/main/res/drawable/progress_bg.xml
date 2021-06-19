@@ -12,7 +12,7 @@
     <shape
         android:innerRadiusRatio="3"
         android:shape="ring"
-        android:thicknessRatio="8"
+        android:thicknessRatio="12"
         android:useLevel="false">
 
         <!--set the size of the shape-->

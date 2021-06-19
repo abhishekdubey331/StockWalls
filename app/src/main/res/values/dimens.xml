@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="sixteenDp">16dp</dimen>
+    <dimen name="zeroDp">0dp</dimen>
+    <dimen name="twoDp">2dp</dimen>
+    <dimen name="oneDp">1dp</dimen>
+    <dimen name="listImageHeight">250dp</dimen>
+    <dimen name="fourDp">4dp</dimen>
+    <dimen name="twentyFourDp">24dp</dimen>
+    <dimen name="fiftyDp">50dp</dimen>
+</resources>

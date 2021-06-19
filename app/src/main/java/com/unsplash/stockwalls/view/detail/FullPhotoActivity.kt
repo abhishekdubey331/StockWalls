@@ -8,7 +8,6 @@ import com.unsplash.stockwalls.databinding.ActivityFullPhotoBinding
 import com.unsplash.stockwalls.utils.loadImage
 import com.unsplash.stockwalls.utils.transparentStatusBar
 
-
 class FullPhotoActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFullPhotoBinding

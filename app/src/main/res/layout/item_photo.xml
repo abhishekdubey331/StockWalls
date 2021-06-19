@@ -4,13 +4,13 @@
     android:id="@+id/background_hack"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardUseCompatPadding="true"
-    app:cardCornerRadius="4dp">
+    app:cardCornerRadius="@dimen/fourDp"
+    app:cardUseCompatPadding="true">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/photoImv"
-        android:scaleType="centerCrop"
         android:layout_width="match_parent"
-        android:layout_height="250dp" />
+        android:layout_height="@dimen/listImageHeight"
+        android:scaleType="centerCrop" />
 
 </androidx.cardview.widget.CardView>

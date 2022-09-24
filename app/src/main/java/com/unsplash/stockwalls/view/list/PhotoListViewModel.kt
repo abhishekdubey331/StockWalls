@@ -2,51 +2,51 @@ package com.unsplash.stockwalls.view.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.unsplash.stockwalls.data.UnsplashPhoto
-import com.unsplash.stockwalls.repository.MainRepository
-import com.unsplash.stockwalls.utils.DispatcherProvider
-import com.unsplash.stockwalls.utils.Resource
+import com.unsplash.stockwalls.common.ResultState
+import com.unsplash.stockwalls.data.UnsplashPhotoItem
+import com.unsplash.stockwalls.domain.contract.FetchPhotosUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-sealed class PhotoFetchEvent {
-    class Success(val unsplashPhoto: UnsplashPhoto?) : PhotoFetchEvent()
-    class Failure(val errorText: String) : PhotoFetchEvent()
-    object Loading : PhotoFetchEvent()
-    object Empty : PhotoFetchEvent()
-}
+data class PhotoListScreenState(
+    val loading: Boolean = false,
+    val photosList: List<UnsplashPhotoItem> = emptyList(),
+    val errorMessage: String? = null
+)
 
 @HiltViewModel
 class PhotoListViewModel @Inject constructor(
-    private val repository: MainRepository,
-    private val dispatchers: DispatcherProvider,
+    private val fetchPhotosUseCase: FetchPhotosUseCase
 ) : ViewModel() {
 
     var currentPage = 1
 
-    private val _photoFetchEvent = MutableStateFlow<PhotoFetchEvent>(PhotoFetchEvent.Empty)
+    private val _photoFetchEvent = MutableStateFlow(PhotoListScreenState())
     val photoFetchEvent = _photoFetchEvent.asStateFlow()
 
     init {
-        fetchPhotosByPage(currentPage)
+        fetchPhotosByPage(1)
     }
 
     fun fetchPhotosByPage(pageNo: Int) {
-        viewModelScope.launch(dispatchers.io) {
-            _photoFetchEvent.value = PhotoFetchEvent.Loading
-            currentPage++
-            when (val photoResponse = repository.getPhotoList(pageNo)) {
-                is Resource.Error -> {
-                    _photoFetchEvent.value =
-                        PhotoFetchEvent.Failure(photoResponse.message ?: "Something Went Wrong")
-                }
-                is Resource.Success -> {
-                    val photoList = photoResponse.data
-                    _photoFetchEvent.value = PhotoFetchEvent.Success(photoList)
+        viewModelScope.launch {
+            fetchPhotosUseCase(pageNo).collect { result ->
+                _photoFetchEvent.update {
+                    when (result) {
+                        is ResultState.Loading -> it.copy(loading = true, errorMessage = "")
+
+                        is ResultState.Success -> it.copy(loading = false, photosList = result.data)
+
+                        is ResultState.Failure -> it.copy(
+                            loading = false,
+                            errorMessage = result.errorMessage
+                        )
+                    }
                 }
             }
         }

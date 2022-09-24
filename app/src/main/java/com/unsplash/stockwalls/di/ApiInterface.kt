@@ -8,5 +8,7 @@ import retrofit2.http.Query
 interface ApiInterface {
 
     @GET("photos")
-    suspend fun getPhotoList(@Query("page") pageNo: Int): Response<UnsplashPhoto>
+    suspend fun getPhotoList(
+        @Query("page") pageNo: Int
+    ): Response<UnsplashPhoto>
 }

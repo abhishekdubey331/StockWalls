@@ -22,7 +22,6 @@ android {
     buildTypes {
         release {
             buildConfigField "String", "ACCESS_KEY", ACCESS_KEY
-            buildConfigField "String", "SECRET_KEY", SECRET_KEY
             debuggable false
             minifyEnabled true
             shrinkResources true
@@ -31,7 +30,6 @@ android {
 
         debug {
             buildConfigField "String", "ACCESS_KEY", ACCESS_KEY
-            buildConfigField "String", "SECRET_KEY", SECRET_KEY
             debuggable true
             minifyEnabled false
             shrinkResources false

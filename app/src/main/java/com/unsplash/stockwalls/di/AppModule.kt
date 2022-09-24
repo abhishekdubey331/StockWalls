@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 private const val BASE_URL = "https://api.unsplash.com/"
-private const val AUTHORIZATION = "Authorization"
+private const val AUTHORIZATION = "client_id"
 
 @InstallIn(SingletonComponent::class)
 @Module
@@ -50,13 +50,16 @@ object AppModule {
 
     private fun createHttpClient(): OkHttpClient {
         val logging = HttpLoggingInterceptor()
-        logging.level = HttpLoggingInterceptor.Level.BODY
+        logging.level = HttpLoggingInterceptor.Level.HEADERS
         return OkHttpClient.Builder()
             .addInterceptor(logging)
             .addInterceptor(Interceptor { chain ->
-                val builder = chain.request().newBuilder()
-                builder.header(AUTHORIZATION, BuildConfig.ACCESS_KEY)
-                return@Interceptor chain.proceed(builder.build())
+                val url = chain
+                    .request().url
+                    .newBuilder()
+                    .addQueryParameter(AUTHORIZATION, BuildConfig.ACCESS_KEY)
+                    .build()
+                chain.proceed(chain.request().newBuilder().url(url).build())
             }).build()
     }
 

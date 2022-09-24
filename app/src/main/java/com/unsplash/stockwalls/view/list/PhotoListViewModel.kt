@@ -8,9 +8,17 @@ import com.unsplash.stockwalls.utils.DispatcherProvider
 import com.unsplash.stockwalls.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
+
+sealed class PhotoFetchEvent {
+    class Success(val unsplashPhoto: UnsplashPhoto?) : PhotoFetchEvent()
+    class Failure(val errorText: String) : PhotoFetchEvent()
+    object Loading : PhotoFetchEvent()
+    object Empty : PhotoFetchEvent()
+}
 
 @HiltViewModel
 class PhotoListViewModel @Inject constructor(
@@ -18,16 +26,14 @@ class PhotoListViewModel @Inject constructor(
     private val dispatchers: DispatcherProvider,
 ) : ViewModel() {
 
-    sealed class PhotoFetchEvent {
-        class Success(val unsplashPhoto: UnsplashPhoto?) : PhotoFetchEvent()
-        class Failure(val errorText: String) : PhotoFetchEvent()
-        object Loading : PhotoFetchEvent()
-        object Empty : PhotoFetchEvent()
-    }
+    var currentPage = 1
 
     private val _photoFetchEvent = MutableStateFlow<PhotoFetchEvent>(PhotoFetchEvent.Empty)
-    val photoFetchEvent: StateFlow<PhotoFetchEvent> = _photoFetchEvent
-    var currentPage = 1
+    val photoFetchEvent = _photoFetchEvent.asStateFlow()
+
+    init {
+        fetchPhotosByPage(currentPage)
+    }
 
     fun fetchPhotosByPage(pageNo: Int) {
         viewModelScope.launch(dispatchers.io) {

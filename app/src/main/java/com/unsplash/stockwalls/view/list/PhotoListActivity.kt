@@ -19,6 +19,7 @@ import com.unsplash.stockwalls.utils.RecyclerViewLoadMoreScroll
 import com.unsplash.stockwalls.utils.openActivity
 import com.unsplash.stockwalls.view.detail.FullPhotoActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 
 
@@ -41,12 +42,10 @@ class PhotoListActivity : AppCompatActivity(), PhotoItemClicked {
         setContentView(binding.root)
         mAdapter = PhotoAdapter(this)
         setRVLayoutManager()
-        photoListViewModel.fetchPhotosByPage(photoListViewModel.currentPage)
-
         lifecycleScope.launchWhenStarted {
             photoListViewModel.photoFetchEvent.collect { event ->
                 when (event) {
-                    is PhotoListViewModel.PhotoFetchEvent.Success -> {
+                    is PhotoFetchEvent.Success -> {
                         event.unsplashPhoto?.toMutableList()?.let {
                             mAdapter.removeLoadingView()
                             mAdapter.submitData(it)
@@ -57,10 +56,10 @@ class PhotoListActivity : AppCompatActivity(), PhotoItemClicked {
                             }
                         }
                     }
-                    is PhotoListViewModel.PhotoFetchEvent.Failure -> {
+                    is PhotoFetchEvent.Failure -> {
                         binding.progressBar.isVisible = false
                     }
-                    is PhotoListViewModel.PhotoFetchEvent.Loading -> {
+                    is PhotoFetchEvent.Loading -> {
                         if (photoListViewModel.currentPage < 2) {
                             binding.progressBar.isVisible = true
                         }

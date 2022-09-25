@@ -15,12 +15,12 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.github.chrisbanes.photoview.PhotoView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/fullPhotoImv"
         android:layout_width="@dimen/zeroDp"
         android:layout_height="@dimen/zeroDp"
-        android:scaleType="centerCrop"
         android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
         android:transitionName="@string/app_name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -1,9 +1,7 @@
 package com.unsplash.stockwalls.data
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
-
-class UnsplashPhoto : ArrayList<UnsplashPhotoItem>()
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class UnsplashPhotoItem(

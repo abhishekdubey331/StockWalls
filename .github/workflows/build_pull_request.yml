@@ -19,7 +19,7 @@ jobs:
       - name: Create gradle.properties file
         run: |
             touch gradle.properties
-            echo ACCESS_KEY=${{ secrets.ACCESS_KEY }} >> gradle.properties
+            echo ACCESS_KEY=${{ "secrets.ACCESS_KEY" }} >> gradle.properties
             cat gradle.properties  
 
       - name: Build the app

@@ -21,7 +21,7 @@ android {
 
     buildTypes {
         release {
-            buildConfigField "String", "ACCESS_KEY", ACCESS_KEY
+            buildConfigField ("String", "ACCESS_KEY", getApiKey())
             debuggable false
             minifyEnabled true
             shrinkResources true
@@ -29,7 +29,7 @@ android {
         }
 
         debug {
-            buildConfigField "String", "ACCESS_KEY", ACCESS_KEY
+            buildConfigField ("String", "ACCESS_KEY", getApiKey())
             debuggable true
             minifyEnabled false
             shrinkResources false
@@ -99,4 +99,11 @@ dependencies {
     // Junit
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test.ext:junit:$junit_ext_version"
+}
+
+String getApiKey() {
+    def propFile = rootProject.file("./local.properties")
+    def properties = new Properties()
+    properties.load(new FileInputStream(propFile))
+    return properties['ACCESS_KEY']
 }

@@ -15,9 +15,12 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11.0
-      - name: Access ACCESS_KEY
-        env:
-          ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
-        run: echo $ACCESS_KEY=\"$ACCESS_KEY\" > ./local.properties
+
+      - name: Create gradle.properties file
+        run: |
+            touch gradle.properties
+            echo ACCESS_KEY=${{ secrets.ACCESS_KEY }} >> gradle.properties
+            cat gradle.properties  
+
       - name: Build the app
         run: ./gradlew assembleDebug

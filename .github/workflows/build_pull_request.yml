@@ -18,6 +18,6 @@ jobs:
       - name: Access ACCESS_KEY
         env:
           APOD_API_KEY: ${{ secrets.ACCESS_KEY }}
-        run: echo APOD_API_KEY=\"$ACCESS_KEY\" > ./local.properties
+        run: echo $ACCESS_KEY=\"$ACCESS_KEY\" > ./local.properties
       - name: Build the app
         run: ./gradlew assembleDebug

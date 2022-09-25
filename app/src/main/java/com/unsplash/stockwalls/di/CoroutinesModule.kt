@@ -13,7 +13,6 @@ import javax.inject.Qualifier
  *    Later can add Dispatchers.Default,Dispatchers.Unconfined
  *    As and when required
  */
-
 @Retention(AnnotationRetention.BINARY)
 @Qualifier
 annotation class IoDispatcher

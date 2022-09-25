@@ -1,4 +1,4 @@
-package com.unsplash.stockwalls.data
+package com.unsplash.stockwalls.data.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

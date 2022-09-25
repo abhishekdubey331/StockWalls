@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.unsplash.stockwalls.R
 import com.unsplash.stockwalls.adapter.PhotoItemClicked
 import com.unsplash.stockwalls.adapter.PhotoListAdapter
-import com.unsplash.stockwalls.data.UnsplashPhotoItem
+import com.unsplash.stockwalls.data.model.UnsplashPhotoItem
 import com.unsplash.stockwalls.databinding.ActivityPhotoListBinding
 import com.unsplash.stockwalls.utils.gone
 import com.unsplash.stockwalls.utils.launchAndRepeatWithViewLifecycle

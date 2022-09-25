@@ -3,7 +3,6 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
-    id 'androidx.navigation.safeargs'
     id 'kotlin-parcelize'
 }
 
@@ -22,7 +21,7 @@ android {
 
     buildTypes {
         release {
-            buildConfigField "String", "ACCESS_KEY", ACCESS_KEY
+            buildConfigField ("String", "ACCESS_KEY", getApiKey())
             debuggable false
             minifyEnabled true
             shrinkResources true
@@ -30,7 +29,7 @@ android {
         }
 
         debug {
-            buildConfigField "String", "ACCESS_KEY", ACCESS_KEY
+            buildConfigField ("String", "ACCESS_KEY", getApiKey())
             debuggable true
             minifyEnabled false
             shrinkResources false
@@ -60,10 +59,6 @@ dependencies {
 
     // ViewModel Delegate
     implementation "androidx.fragment:fragment-ktx:$fragment_ktx_version"
-
-    // Navigation component
-    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
@@ -104,4 +99,11 @@ dependencies {
     // Junit
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test.ext:junit:$junit_ext_version"
+}
+
+String getApiKey() {
+    def propFile = rootProject.file("./local.properties")
+    def properties = new Properties()
+    properties.load(new FileInputStream(propFile))
+    return properties['ACCESS_KEY']
 }

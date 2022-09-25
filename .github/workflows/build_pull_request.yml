@@ -118,6 +118,11 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
+            
+      - name: Access APOD_API_KEY
+      env:
+        APOD_API_KEY: ${{ secrets.ACCESS_KEY }}
+      run: echo ACCESS_KEY=\"$ACCESS_KEY\" > ./local.properties
 
       - name: Assemble Debug
         run: ./gradlew assembleDebug

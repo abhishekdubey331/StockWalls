@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.unsplash.stockwalls.R
-import com.unsplash.stockwalls.data.UnsplashPhotoItem
+import com.unsplash.stockwalls.data.model.UnsplashPhotoItem
 import com.unsplash.stockwalls.utils.loadImageWithPlaceholder
 
 class PhotoListAdapter(private val listener: PhotoItemClicked) :

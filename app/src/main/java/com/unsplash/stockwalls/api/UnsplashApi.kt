@@ -1,6 +1,6 @@
 package com.unsplash.stockwalls.api
 
-import com.unsplash.stockwalls.data.UnsplashPhotoItem
+import com.unsplash.stockwalls.data.model.UnsplashPhotoItem
 import retrofit2.http.GET
 import retrofit2.http.Query
 

@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 data class PhotoListScreenState(
     val loading: Boolean = false,
     val photosList: List<UnsplashPhotoItem> = emptyList(),

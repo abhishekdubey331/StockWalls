@@ -1,9 +1,8 @@
-           ### StockWalls 👀 Images via Unsplash API 🖼
+### StockWalls 👀 Images via Unsplash API 🖼
 
-** StockWalls is an Android application that utilizes various libraries and follows the MVVM
-architecture. It incorporates Dagger Hilt, Coroutines, Lifecycle, LiveData, ViewModel, Retrofit, and
-Coil to enhance its functionality.
-Photos taken from api are shown in the app. Image API: https://unsplash.com/developers
+#### StockWalls is an Android application that utilizes various libraries and follows the MVVM architecture. It incorporates Dagger Hilt, Coroutines, Lifecycle, LiveData, ViewModel, Retrofit, and Coil to enhance its functionality. Photos taken from api are shown in the app.
+
+## API: https://unsplash.com/developers
 
 ## Architecture 🏛
 

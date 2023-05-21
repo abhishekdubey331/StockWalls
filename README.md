@@ -32,7 +32,7 @@ Photos taken from api are shown in the app. Image API: https://unsplash.com/deve
 
 ## Android 📱 Application Screens 📸
 
-<img src="https://github.com/abhishekdubey331/StockWalls/blob/add_gif/demo_gif.gif" width="500"/>
+<img src="https://github.com/abhishekdubey331/StockWalls/blob/main/demo-video.gif" width="500"/>
 
 ## License ℹ️
 

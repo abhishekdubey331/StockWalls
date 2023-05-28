@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.app.ActivityOptionsCompat
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.unsplash.stockwalls.R
@@ -18,7 +19,6 @@ import com.unsplash.stockwalls.utils.openActivity
 import com.unsplash.stockwalls.utils.visible
 import com.unsplash.stockwalls.view.detail.FullPhotoActivity
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class PhotoListActivity : AppCompatActivity(), PhotoItemClicked {
@@ -35,6 +35,7 @@ class PhotoListActivity : AppCompatActivity(), PhotoItemClicked {
     private val mAdapter by lazy { PhotoListAdapter(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         super.onCreate(savedInstanceState)
         binding = ActivityPhotoListBinding.inflate(layoutInflater)
         setContentView(binding.root)

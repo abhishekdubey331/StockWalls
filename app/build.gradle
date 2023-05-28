@@ -54,6 +54,10 @@ android {
 }
 
 dependencies {
+    def splashScreenVersion = "1.0.1"
+    // Use: def instead of val if you are not using Kotlin Gradle(.kts)
+
+    implementation "androidx.core:core-splashscreen:$splashScreenVersion"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"

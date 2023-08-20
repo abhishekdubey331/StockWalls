@@ -12,9 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppSplash">
 
-        <activity android:name=".view.detail.FullPhotoActivity" />
+        <activity
+            android:theme="@style/Theme.DaggerHilt"
+            android:name=".view.detail.FullPhotoActivity" />
 
-        <activity android:name=".view.list.PhotoListActivity"
+        <activity
+            android:name=".view.list.PhotoListActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

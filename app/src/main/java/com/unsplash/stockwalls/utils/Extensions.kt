@@ -63,7 +63,8 @@ inline fun <T> Context.openActivity(
     options: ActivityOptionsCompat,
     extras: Bundle.() -> Unit = {},
 ) {
-    val intent = Intent(this, it)
+    val intent = Intent()
+    intent.setClass(this, it)
     intent.putExtras(Bundle().apply(extras))
     startActivity(intent, options.toBundle())
 }

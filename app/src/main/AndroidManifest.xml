@@ -13,18 +13,22 @@
         android:theme="@style/Theme.AppSplash">
 
         <activity
-            android:theme="@style/Theme.DaggerHilt"
-            android:name=".view.detail.FullPhotoActivity" />
+            android:name=".ui.list.PhotoListActivity"
+            android:exported="true"
+            android:theme="@style/Theme.StockWalls">
 
-        <activity
-            android:name=".view.list.PhotoListActivity"
-            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+
+        <activity
+            android:name=".ui.detail.FullPhotoActivity"
+            android:theme="@style/Theme.StockWalls" />
+
     </application>
 
 </manifest>

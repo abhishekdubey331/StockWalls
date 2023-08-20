@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.DaggerHilt" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.StockWalls" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimary</item>
@@ -23,7 +23,6 @@
         <item name="windowSplashScreenBackground">@color/colorPrimaryDark</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash</item>
         <item name="windowSplashScreenAnimationDuration">300</item>
-        <item name="postSplashScreenTheme">@style/Theme.DaggerHilt</item>
 
         <!-- Status bar and Nav bar configs -->
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>

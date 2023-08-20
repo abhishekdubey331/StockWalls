@@ -67,6 +67,7 @@ dependencies {
 
     // Compose
     implementation 'androidx.compose.material3:material3'
+    implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
     // or Material Design 2
     implementation 'androidx.compose.material:material'
     // or skip Material Design and build directly on top of foundational components
@@ -117,6 +118,8 @@ dependencies {
 
     // Coil
     implementation "io.coil-kt:coil:2.2.2"
+    implementation "io.coil-kt:coil-compose:2.2.2"
+    implementation "com.github.bumptech.glide:compose:1.0.0-alpha.1"
 
     /***
      *  ************  Testing Libraries Below *************

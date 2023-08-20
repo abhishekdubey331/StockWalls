@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import androidx.activity.ComponentActivity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.app.ActivityOptionsCompat
@@ -14,7 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import coil.load
 import com.unsplash.stockwalls.R
-import com.unsplash.stockwalls.view.detail.FullPhotoActivity
+import com.unsplash.stockwalls.ui.detail.FullPhotoActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -58,12 +59,29 @@ inline fun AppCompatActivity.launchAndRepeatWithViewLifecycle(
     }
 }
 
+
+/**
+ * Launches a new coroutine and repeats `block` every time the Fragment's viewLifecycleOwner
+ * is in and out of `minActiveState` lifecycle state.
+ */
+inline fun ComponentActivity.launchAndRepeatWithViewLifecycle(
+    minActiveState: Lifecycle.State = Lifecycle.State.STARTED,
+    crossinline block: suspend CoroutineScope.() -> Unit
+) {
+    lifecycleScope.launch {
+        repeatOnLifecycle(minActiveState) {
+            block()
+        }
+    }
+}
+
 inline fun <T> Context.openActivity(
     it: Class<T>,
     options: ActivityOptionsCompat,
     extras: Bundle.() -> Unit = {},
 ) {
-    val intent = Intent(this, it)
+    val intent = Intent()
+    intent.setClass(this, it)
     intent.putExtras(Bundle().apply(extras))
     startActivity(intent, options.toBundle())
 }

@@ -1,4 +1,4 @@
-package com.unsplash.stockwalls.view.detail
+package com.unsplash.stockwalls.ui.detail
 
 import android.os.Bundle
 import android.os.Parcelable

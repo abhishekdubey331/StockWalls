@@ -1,4 +1,4 @@
-package com.unsplash.stockwalls.ui.list
+package com.unsplash.stockwalls.ui.list.composables
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,7 +13,6 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
@@ -22,21 +21,15 @@ import androidx.paging.compose.itemKey
 import com.unsplash.stockwalls.R
 import com.unsplash.stockwalls.ui.components.loading.LoadingIndicator
 import com.unsplash.stockwalls.ui.components.toolbar.ToolbarTop
-import com.unsplash.stockwalls.ui.detail.FullPhotoActivity
+import com.unsplash.stockwalls.ui.list.PhotoListViewModel
 import com.unsplash.stockwalls.ui.mapper.PhotoUIModel
 import com.unsplash.stockwalls.ui.theme.StockWallsTheme
-import com.unsplash.stockwalls.utils.openActivity
 
 @Composable
-fun PhotoListScreen() {
-    val context = LocalView.current.context
+fun PhotoListScreen(navigateToDetail: (photo: PhotoUIModel) -> Unit) {
     Column {
         ToolbarTop(title = stringResource(id = R.string.app_name))
-        PhotoGrid { unsplashPhotoItem ->
-            context.openActivity(FullPhotoActivity::class.java) {
-                putParcelable(FullPhotoActivity.PHOTO_KEY, unsplashPhotoItem)
-            }
-        }
+        PhotoGrid(navigateToDetail)
     }
 }
 
@@ -60,10 +53,9 @@ fun PhotoGrid(navigateToDetail: (photo: PhotoUIModel) -> Unit) {
             .fillMaxSize()
             .padding(spacing.sm)
     ) {
-        // Display grid items
         items(
             count = photoPagingItems.itemCount,
-            key = photoPagingItems.itemKey { item -> item.id.orEmpty() }
+            key = photoPagingItems.itemKey { item -> item.id }
         ) { index ->
             photoPagingItems[index]?.let { item ->
                 PhotoCard(photo = item, spacing = spacing, navigateToDetail = navigateToDetail)

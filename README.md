@@ -38,3 +38,15 @@ Explore the app's interface through this demo video:
 1. Clone this repository:
    ```bash
    git clone https://github.com/abhishekdubey331/StockWalls.git
+
+2. Get your Unsplash API Access Key:
+
+- Register at [Unsplash Developers](https://unsplash.com/developers) and get your access key.
+
+3. Add your API key to `local.properties`:
+
+```bash
+ACCESS_KEY="your_unsplash_access_key_here"
+```
+
+## Now you will be able to run the app.

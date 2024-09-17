@@ -13,7 +13,7 @@
         android:theme="@style/Theme.AppSplash">
 
         <activity
-            android:name=".ui.list.PhotoListActivity"
+            android:name=".ui.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.StockWalls">
 

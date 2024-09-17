@@ -77,13 +77,12 @@ inline fun ComponentActivity.launchAndRepeatWithViewLifecycle(
 
 inline fun <T> Context.openActivity(
     it: Class<T>,
-    options: ActivityOptionsCompat,
     extras: Bundle.() -> Unit = {},
 ) {
     val intent = Intent()
     intent.setClass(this, it)
     intent.putExtras(Bundle().apply(extras))
-    startActivity(intent, options.toBundle())
+    startActivity(intent)
 }
 
 fun FullPhotoActivity.transparentStatusBar() {

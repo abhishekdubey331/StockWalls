@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class UnsplashPhotoItem(
+data class UnsplashPhotoItemDto(
     val alt_description: String?,
     val blur_hash: String?,
     val color: String?,

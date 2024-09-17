@@ -1,30 +1,17 @@
 package com.unsplash.stockwalls.domain.impl
 
-import com.unsplash.stockwalls.common.ResultState
-import com.unsplash.stockwalls.data.repository.contract.PhotoListRepository
-import com.unsplash.stockwalls.di.IoDispatcher
-import com.unsplash.stockwalls.domain.contract.FetchPhotosUseCase
-import java.io.IOException
+import androidx.paging.PagingData
+import com.unsplash.stockwalls.data.model.UnsplashPhotoItemDto
+import com.unsplash.stockwalls.domain.contract.repository.PhotoListRepository
+import com.unsplash.stockwalls.domain.contract.usecase.FetchPhotosUseCase
 import javax.inject.Inject
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
-import retrofit2.HttpException
+import kotlinx.coroutines.flow.Flow
 
 class FetchPhotosUseCaseImpl @Inject constructor(
-    private val photoListRepository: PhotoListRepository,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
+    private val repository: PhotoListRepository
 ) : FetchPhotosUseCase {
 
-    override fun invoke(pageNo: Int) = flow {
-        try {
-            emit(ResultState.Loading)
-            val venues = photoListRepository.getPhotoList(pageNo)
-            emit(ResultState.Success(venues))
-        } catch (e: HttpException) {
-            emit(ResultState.Failure("stringUtils.somethingWentWrong()"))
-        } catch (e: IOException) {
-            emit(ResultState.Failure("stringUtils.noNetworkErrorMessage()"))
-        }
-    }.flowOn(ioDispatcher)
+    override fun invoke(): Flow<PagingData<UnsplashPhotoItemDto>> {
+        return repository.getPhotoList()
+    }
 }

@@ -138,6 +138,10 @@ dependencies {
     implementation "io.coil-kt:coil-compose:2.2.2"
     implementation "com.github.bumptech.glide:compose:1.0.0-alpha.1"
 
+    // Paging 3
+    implementation "androidx.paging:paging-runtime:3.2.0"
+    implementation "androidx.paging:paging-compose:1.0.0-alpha18"
+
     /***
      *  ************  Testing Libraries Below *************
      */

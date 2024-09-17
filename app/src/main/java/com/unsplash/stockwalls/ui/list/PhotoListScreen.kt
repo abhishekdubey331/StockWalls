@@ -20,10 +20,10 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
 import com.unsplash.stockwalls.R
-import com.unsplash.stockwalls.data.model.UnsplashPhotoItemDto
 import com.unsplash.stockwalls.ui.components.loading.LoadingIndicator
 import com.unsplash.stockwalls.ui.components.toolbar.ToolbarTop
 import com.unsplash.stockwalls.ui.detail.FullPhotoActivity
+import com.unsplash.stockwalls.ui.mapper.PhotoUIModel
 import com.unsplash.stockwalls.ui.theme.StockWallsTheme
 import com.unsplash.stockwalls.utils.openActivity
 
@@ -41,7 +41,7 @@ fun PhotoListScreen() {
 }
 
 @Composable
-fun PhotoGrid(navigateToDetail: (photo: UnsplashPhotoItemDto) -> Unit) {
+fun PhotoGrid(navigateToDetail: (photo: PhotoUIModel) -> Unit) {
     val viewModel: PhotoListViewModel = hiltViewModel()
     val photoPagingItems = viewModel.photoPagingDataFlow.collectAsLazyPagingItems()
     val spacing = StockWallsTheme.spacing

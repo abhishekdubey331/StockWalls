@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -40,21 +39,6 @@ fun AppCompatImageView.loadImageWithPlaceholder(imageUrl: String) {
     load(imageUrl) {
         crossfade(true)
         placeholder(R.drawable.placeholder)
-    }
-}
-
-/**
- * Launches a new coroutine and repeats `block` every time the Fragment's viewLifecycleOwner
- * is in and out of `minActiveState` lifecycle state.
- */
-inline fun AppCompatActivity.launchAndRepeatWithViewLifecycle(
-    minActiveState: Lifecycle.State = Lifecycle.State.STARTED,
-    crossinline block: suspend CoroutineScope.() -> Unit
-) {
-    lifecycleScope.launch {
-        repeatOnLifecycle(minActiveState) {
-            block()
-        }
     }
 }
 

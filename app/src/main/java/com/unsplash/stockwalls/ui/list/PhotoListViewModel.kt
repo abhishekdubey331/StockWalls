@@ -6,10 +6,10 @@ import com.unsplash.stockwalls.common.ResultState
 import com.unsplash.stockwalls.data.model.UnsplashPhotoItemDto
 import com.unsplash.stockwalls.domain.contract.FetchPhotosUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 data class PhotoListScreenState(
     val loading: Boolean = false,
@@ -23,7 +23,7 @@ class PhotoListViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _photoListUiState = MutableStateFlow(PhotoListScreenState())
-    val photoListUiState : StateFlow<PhotoListScreenState> = _photoListUiState
+    val photoListUiState: StateFlow<PhotoListScreenState> = _photoListUiState
 
     init {
         fetchPhotos(0)
@@ -34,15 +34,18 @@ class PhotoListViewModel @Inject constructor(
             fetchPhotosUseCase(page).collect { result ->
                 _photoListUiState.value = when (result) {
                     is ResultState.Loading -> _photoListUiState.value.copy(
-                        loading = true, errorMessage = ""
+                        loading = true,
+                        errorMessage = ""
                     )
 
                     is ResultState.Success -> _photoListUiState.value.copy(
-                        loading = false, photosList = result.data
+                        loading = false,
+                        photosList = result.data
                     )
 
                     is ResultState.Failure -> _photoListUiState.value.copy(
-                        loading = false, errorMessage = result.errorMessage
+                        loading = false,
+                        errorMessage = result.errorMessage
                     )
                 }
             }

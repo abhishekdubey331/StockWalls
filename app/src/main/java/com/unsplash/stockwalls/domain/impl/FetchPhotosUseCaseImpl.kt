@@ -1,15 +1,15 @@
 package com.unsplash.stockwalls.domain.impl
 
 import com.unsplash.stockwalls.common.ResultState
+import com.unsplash.stockwalls.data.repository.contract.PhotoListRepository
 import com.unsplash.stockwalls.di.IoDispatcher
 import com.unsplash.stockwalls.domain.contract.FetchPhotosUseCase
-import com.unsplash.stockwalls.data.repository.contract.PhotoListRepository
+import java.io.IOException
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import retrofit2.HttpException
-import java.io.IOException
-import javax.inject.Inject
 
 class FetchPhotosUseCaseImpl @Inject constructor(
     private val photoListRepository: PhotoListRepository,

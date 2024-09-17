@@ -9,7 +9,6 @@ import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -59,7 +58,6 @@ inline fun AppCompatActivity.launchAndRepeatWithViewLifecycle(
     }
 }
 
-
 /**
  * Launches a new coroutine and repeats `block` every time the Fragment's viewLifecycleOwner
  * is in and out of `minActiveState` lifecycle state.
@@ -77,7 +75,7 @@ inline fun ComponentActivity.launchAndRepeatWithViewLifecycle(
 
 inline fun <T> Context.openActivity(
     it: Class<T>,
-    extras: Bundle.() -> Unit = {},
+    extras: Bundle.() -> Unit = {}
 ) {
     val intent = Intent()
     intent.setClass(this, it)

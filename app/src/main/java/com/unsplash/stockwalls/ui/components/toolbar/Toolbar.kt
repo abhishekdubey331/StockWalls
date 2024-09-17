@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.sp
 import com.unsplash.stockwalls.R
 
 private val jostFontFamily = FontFamily(Font(R.font.jost_book))
+
 @Composable
 fun ToolbarTop(
     title: String

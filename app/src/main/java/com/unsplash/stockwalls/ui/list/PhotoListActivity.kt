@@ -7,7 +7,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -73,7 +72,6 @@ fun PhotoGrid(navigateToDetail: (photo: UnsplashPhotoItemDto) -> Unit) {
     }
 }
 
-
 @Composable
 fun PhotoCard(
     photo: UnsplashPhotoItemDto,
@@ -88,7 +86,7 @@ fun PhotoCard(
             },
         elevation = spacing.xs,
         shape = RoundedCornerShape(spacing.xs),
-        backgroundColor = Color.White,
+        backgroundColor = Color.White
     ) {
         LoadNetworkImage(
             imageUrl = photo.urls.small,

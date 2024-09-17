@@ -7,15 +7,15 @@ import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.unsplash.stockwalls.data.model.UnsplashPhotoItemDto
 import com.unsplash.stockwalls.ui.components.image.LoadNetworkImage
+import com.unsplash.stockwalls.ui.mapper.PhotoUIModel
 import com.unsplash.stockwalls.ui.theme.StockWallsTheme
 
 @Composable
 fun PhotoCard(
-    photo: UnsplashPhotoItemDto,
+    photo: PhotoUIModel,
     spacing: StockWallsTheme.Spacing,
-    navigateToDetail: (photo: UnsplashPhotoItemDto) -> Unit
+    navigateToDetail: (photo: PhotoUIModel) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -28,7 +28,7 @@ fun PhotoCard(
         backgroundColor = Color.White
     ) {
         LoadNetworkImage(
-            imageUrl = photo.urls.small,
+            imageUrl = photo.smallImageUrl,
             contentDescription = "photo_card",
             modifier = Modifier.aspectRatio(1f)
         )

@@ -14,7 +14,7 @@ fun UnsplashPhotoItemDto.toPhotoUIModel(): PhotoUIModel {
         smallImageUrl = urls.small.orEmpty(),
         likeCount = likes,
         photographerName = user.name ?: "Unknown",
-        photographerProfileImageUrl = user.profile_image.small.orEmpty()
+        photographerImageUrl = user.profile_image.small.orEmpty()
     )
 }
 
@@ -34,7 +34,7 @@ data class PhotoUIModel(
     val thumbnailImageUrl: String,
     val likeCount: Int,
     val photographerName: String,
-    val photographerProfileImageUrl: String
+    val photographerImageUrl: String
 ) : Parcelable
 
 @Parcelize

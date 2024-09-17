@@ -31,7 +31,7 @@ class PhotoListRepositoryImpl @Inject constructor(
                 photoDto.toPhotoUIModel()
             }
         }
-        .flowOn(ioDispatcher) // Ensure the flow runs on the IO dispatcher
+        .flowOn(ioDispatcher)
 
     companion object {
         private const val PAGE_SIZE = 20

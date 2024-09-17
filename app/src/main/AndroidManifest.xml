@@ -25,10 +25,6 @@
 
         </activity>
 
-        <activity
-            android:name=".ui.detail.FullPhotoActivity"
-            android:theme="@style/Theme.StockWalls" />
-
     </application>
 
 </manifest>

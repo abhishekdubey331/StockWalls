@@ -1,4 +1,4 @@
-package com.unsplash.stockwalls.ui.list
+package com.unsplash.stockwalls.ui.list.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -58,14 +58,15 @@ fun PhotoCard(
                     .align(Alignment.BottomStart)
                     .background(StockWallsTheme.semiTransparentBlack)
                     .padding(
-                        horizontal = spacing.sm, vertical = spacing.xs
+                        horizontal = spacing.sm,
+                        vertical = spacing.xs
                     ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_photo_grapher),
                     contentDescription = "Photographer",
-                    tint = Color.Unspecified,
+                    tint = Color.Unspecified
                 )
                 Spacer(modifier = Modifier.width(spacing.sm))
                 Text(

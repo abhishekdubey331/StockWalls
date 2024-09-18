@@ -70,6 +70,7 @@ fun PhotoCard(
                 )
                 Spacer(modifier = Modifier.width(spacing.sm))
                 Text(
+                    maxLines = 1,
                     text = photo.photographerName,
                     fontFamily = StockWallsTheme.fontFamily,
                     color = Color.White

@@ -18,13 +18,6 @@ fun UnsplashPhotoItemDto.toPhotoUIModel(): PhotoUIModel {
     )
 }
 
-fun User.toUserUIModel(): UserUIModel {
-    return UserUIModel(
-        name = this.name ?: "Unknown",
-        profileImageUrl = this.profile_image.small.orEmpty()
-    )
-}
-
 @Parcelize
 data class PhotoUIModel(
     val id: String,

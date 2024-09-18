@@ -1,6 +1,5 @@
 package com.unsplash.stockwalls.ui.detail.composables
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Icon
@@ -15,8 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import coil.compose.rememberImagePainter
+import com.unsplash.stockwalls.ui.components.image.LoadNetworkImage
 import com.unsplash.stockwalls.ui.components.loading.LoadingIndicator
 import com.unsplash.stockwalls.ui.mapper.PhotoUIModel
 
@@ -31,17 +29,14 @@ fun FullPhotoScreen(photoItem: PhotoUIModel, onBackClick: () -> Unit) {
             LoadingIndicator(modifier = Modifier.fillMaxSize())
         }
 
-        Image(
-            painter = rememberImagePainter(data = photoItem.fullImageUrl, builder = {
-                crossfade(true)
-                listener(
-                    onSuccess = { _, _ -> isImageLoaded = true },
-                    onError = { _, _ -> isImageLoaded = false }
-                )
-            }),
-            contentDescription = null,
+        LoadNetworkImage(
+            imageUrl = photoItem.fullImageUrl,
+            contentDescription = "Full Photo",
+            placeHolderEnabled = false,
             modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
+            showAnimProgress = false,
+            onSuccess = { isImageLoaded = true },
+            onError = { isImageLoaded = false }
         )
 
         IconButton(

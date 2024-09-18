@@ -46,7 +46,7 @@ fun PhotoCard(
         Box(modifier = Modifier.fillMaxSize()) {
             LoadNetworkImage(
                 imageUrl = photo.smallImageUrl,
-                contentDescription = "Photo Card",
+                contentDescription = "Photo card",
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(RoundedCornerShape(spacing.sm))

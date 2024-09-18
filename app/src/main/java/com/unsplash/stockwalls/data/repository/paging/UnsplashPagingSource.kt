@@ -11,16 +11,12 @@ class UnsplashPagingSource(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, UnsplashPhotoItemDto> {
         return try {
-            // Start page from 1 if undefined
             val page = params.key ?: 1
-            // Make API request
             val response = apiService.getPhotoList(pageNo = page)
-
-            // Return the data and information on how to load the next/previous page
             LoadResult.Page(
                 data = response,
-                prevKey = if (page == 1) null else page - 1, // No previous page if it's the first
-                nextKey = if (response.isEmpty()) null else page + 1 // Null if no more data
+                prevKey = if (page == 1) null else page - 1,
+                nextKey = if (response.isEmpty()) null else page + 1
             )
         } catch (e: Exception) {
             LoadResult.Error(e)
@@ -28,7 +24,6 @@ class UnsplashPagingSource(
     }
 
     override fun getRefreshKey(state: PagingState<Int, UnsplashPhotoItemDto>): Int? {
-        // This defines the key used to reset the pagination
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)

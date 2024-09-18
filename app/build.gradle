@@ -9,12 +9,12 @@ plugins {
 
 android {
 
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.unsplash.stockwalls"
         minSdkVersion 21
-        targetSdkVersion 33
+        targetSdkVersion 34
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -84,12 +84,8 @@ dependencies {
     // Compose
     implementation 'androidx.compose.material3:material3'
     implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
-    // or Material Design 2
     implementation 'androidx.compose.material:material'
-    // or skip Material Design and build directly on top of foundational components
     implementation 'androidx.compose.foundation:foundation'
-    // or only import the main APIs for the underlying toolkit systems,
-    // such as input and measurement/layout
     implementation 'androidx.compose.ui:ui'
 
     // Android Studio Preview support
@@ -102,9 +98,7 @@ dependencies {
     // Optional - Add window size utils
     implementation 'androidx.compose.material3:material3-window-size-class'
 
-    // Optional - Integration with activities
     implementation 'androidx.activity:activity-compose:1.7.2'
-    // Optional - Integration with ViewModels
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1'
 
     implementation "androidx.core:core-splashscreen:$splashScreenVersion"
@@ -134,8 +128,8 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
 
     // Coil
-    implementation "io.coil-kt:coil:2.2.2"
-    implementation "io.coil-kt:coil-compose:2.2.2"
+    implementation "io.coil-kt:coil:2.6.0"
+    implementation "io.coil-kt:coil-compose:2.6.0"
     implementation "com.github.bumptech.glide:compose:1.0.0-alpha.1"
 
     // Paging 3

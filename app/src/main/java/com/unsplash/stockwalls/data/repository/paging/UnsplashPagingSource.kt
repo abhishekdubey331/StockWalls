@@ -4,8 +4,9 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.unsplash.stockwalls.api.UnsplashApi
 import com.unsplash.stockwalls.data.model.UnsplashPhotoItemDto
+import javax.inject.Inject
 
-class UnsplashPagingSource(
+class UnsplashPagingSource @Inject constructor(
     private val apiService: UnsplashApi
 ) : PagingSource<Int, UnsplashPhotoItemDto>() {
 

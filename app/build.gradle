@@ -20,7 +20,15 @@ android {
     }
 
     buildTypes {
+        def propFile = rootProject.file("./local.properties")
+        def properties = new Properties()
+        if (propFile.exists()) {
+            properties.load(new FileInputStream(propFile))
+        }
+        def accessKey = properties['ACCESS_KEY'] ?: "\"default_key\""
+
         release {
+            buildConfigField("String", "ACCESS_KEY", accessKey)
             debuggable false
             minifyEnabled true
             shrinkResources true
@@ -28,6 +36,7 @@ android {
         }
 
         debug {
+            buildConfigField("String", "ACCESS_KEY", accessKey)
             debuggable true
             minifyEnabled false
             shrinkResources false
@@ -59,6 +68,7 @@ android {
         buildFeatures {
             viewBinding = true
             compose true
+            buildConfig = true
         }
     }
 
@@ -131,8 +141,7 @@ dependencies {
     implementation "androidx.paging:paging-compose:3.3.2"
 
     /***
-     *  ************  Testing Libraries Below *************
-     */
+     *  ************  Testing Libraries Below **************/
     // Mockito
     testImplementation "org.mockito:mockito-core:$mockito_core_version"
     testImplementation "org.mockito:mockito-inline:$mockito_inline_version"

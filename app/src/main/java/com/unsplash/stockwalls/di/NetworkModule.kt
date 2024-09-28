@@ -1,6 +1,5 @@
 package com.unsplash.stockwalls.di
 
-import com.unsplash.stockwalls.BuildConfig
 import com.unsplash.stockwalls.api.UnsplashApi
 import com.unsplash.stockwalls.common.AUTHORIZATION
 import com.unsplash.stockwalls.common.BASE_URL
@@ -38,7 +37,7 @@ object NetworkModule {
                 val url = chain
                     .request().url
                     .newBuilder()
-                    .addQueryParameter(AUTHORIZATION, BuildConfig.ACCESS_KEY)
+                    .addQueryParameter(AUTHORIZATION, "Enter your api key here")
                     .build()
                 chain.proceed(chain.request().newBuilder().url(url).build())
             }.build()

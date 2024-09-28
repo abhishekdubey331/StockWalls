@@ -20,11 +20,7 @@ android {
     }
 
     buildTypes {
-        def propFile = rootProject.file("./local.properties")
-        def properties = new Properties()
-        properties.load(new FileInputStream(propFile))
         release {
-            buildConfigField ("String", "ACCESS_KEY", properties['ACCESS_KEY'])
             debuggable false
             minifyEnabled true
             shrinkResources true
@@ -32,7 +28,6 @@ android {
         }
 
         debug {
-            buildConfigField ("String", "ACCESS_KEY", properties['ACCESS_KEY'])
             debuggable true
             minifyEnabled false
             shrinkResources false

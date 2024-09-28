@@ -1,5 +1,6 @@
 package com.unsplash.stockwalls.di
 
+import com.unsplash.stockwalls.BuildConfig
 import com.unsplash.stockwalls.api.UnsplashApi
 import com.unsplash.stockwalls.common.AUTHORIZATION
 import com.unsplash.stockwalls.common.BASE_URL
@@ -7,11 +8,11 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -37,7 +38,7 @@ object NetworkModule {
                 val url = chain
                     .request().url
                     .newBuilder()
-                    .addQueryParameter(AUTHORIZATION, "Enter your api key here")
+                    .addQueryParameter(AUTHORIZATION, BuildConfig.ACCESS_KEY)
                     .build()
                 chain.proceed(chain.request().newBuilder().url(url).build())
             }.build()

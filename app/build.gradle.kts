@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 val propFile = rootProject.file("./local.properties")
@@ -108,6 +109,10 @@ dependencies {
 
     // ViewModel
     implementation(libs.fragment.ktx)
+
+    // Navigation
+    implementation(libs.navigation.compose)
+    implementation(libs.kotlinx.serialization.json)
 
     // Retrofit
     implementation(libs.retrofit)

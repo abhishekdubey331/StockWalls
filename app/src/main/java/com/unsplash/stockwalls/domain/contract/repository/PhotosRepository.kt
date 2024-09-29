@@ -4,6 +4,7 @@ import androidx.paging.PagingData
 import com.unsplash.stockwalls.ui.mapper.PhotoUIModel
 import kotlinx.coroutines.flow.Flow
 
-interface PhotoListRepository {
+interface PhotosRepository {
     fun getPhotoList(): Flow<PagingData<PhotoUIModel>>
+    fun getPhotoById(photoId: String): Flow<PhotoUIModel>
 }

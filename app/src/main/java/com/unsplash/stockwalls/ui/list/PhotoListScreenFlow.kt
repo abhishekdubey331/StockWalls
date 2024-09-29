@@ -1,4 +1,4 @@
-package com.unsplash.stockwalls.ui.list.composables
+package com.unsplash.stockwalls.ui.list
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,12 +21,11 @@ import androidx.paging.compose.itemKey
 import com.unsplash.stockwalls.R
 import com.unsplash.stockwalls.ui.components.loading.LoadingIndicator
 import com.unsplash.stockwalls.ui.components.toolbar.ToolbarTop
-import com.unsplash.stockwalls.ui.list.PhotoListViewModel
 import com.unsplash.stockwalls.ui.mapper.PhotoUIModel
 import com.unsplash.stockwalls.ui.theme.StockWallsTheme
 
 @Composable
-fun PhotoListScreen(navigateToDetail: (photo: PhotoUIModel) -> Unit) {
+fun PhotoListScreenFlow(navigateToDetail: (photo: PhotoUIModel) -> Unit) {
     Column {
         ToolbarTop(title = stringResource(id = R.string.app_name))
         PhotoGrid(navigateToDetail)

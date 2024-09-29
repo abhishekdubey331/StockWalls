@@ -1,5 +1,8 @@
 package com.unsplash.stockwalls.ui.list
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,16 +27,24 @@ import com.unsplash.stockwalls.ui.components.toolbar.ToolbarTop
 import com.unsplash.stockwalls.ui.mapper.PhotoUIModel
 import com.unsplash.stockwalls.ui.theme.StockWallsTheme
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun PhotoListScreenFlow(navigateToDetail: (photo: PhotoUIModel) -> Unit) {
+fun SharedTransitionScope.PhotoListScreenFlow(
+    animatedVisibilityScope: AnimatedVisibilityScope,
+    navigateToDetail: (photo: PhotoUIModel) -> Unit
+) {
     Column {
         ToolbarTop(title = stringResource(id = R.string.app_name))
-        PhotoGrid(navigateToDetail)
+        PhotoGrid(animatedVisibilityScope, navigateToDetail)
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun PhotoGrid(navigateToDetail: (photo: PhotoUIModel) -> Unit) {
+fun SharedTransitionScope.PhotoGrid(
+    animatedVisibilityScope: AnimatedVisibilityScope,
+    navigateToDetail: (photo: PhotoUIModel) -> Unit
+) {
     val viewModel: PhotoListViewModel = hiltViewModel()
     val photoPagingItems = viewModel.photoPagingDataFlow.collectAsLazyPagingItems()
     val spacing = StockWallsTheme.spacing
@@ -57,7 +68,12 @@ fun PhotoGrid(navigateToDetail: (photo: PhotoUIModel) -> Unit) {
             key = photoPagingItems.itemKey { item -> item.id }
         ) { index ->
             photoPagingItems[index]?.let { item ->
-                PhotoCard(photo = item, spacing = spacing, navigateToDetail = navigateToDetail)
+                PhotoCard(
+                    animatedVisibilityScope = animatedVisibilityScope,
+                    photo = item,
+                    spacing = spacing,
+                    navigateToDetail = navigateToDetail
+                )
             }
         }
 

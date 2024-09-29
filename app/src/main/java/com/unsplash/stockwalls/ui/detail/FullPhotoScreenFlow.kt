@@ -1,5 +1,8 @@
 package com.unsplash.stockwalls.ui.detail
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Icon
@@ -19,8 +22,10 @@ import com.unsplash.stockwalls.ui.components.image.LoadNetworkImage
 import com.unsplash.stockwalls.ui.components.loading.LoadingIndicator
 import com.unsplash.stockwalls.ui.mapper.PhotoUIModel
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun FullPhotoScreenFlow(
+fun SharedTransitionScope.FullPhotoScreenFlow(
+    animatedVisibilityScope: AnimatedVisibilityScope,
     photoId: String,
     navigateUp: () -> Unit
 ) {
@@ -38,13 +43,19 @@ fun FullPhotoScreenFlow(
 
         is PhotoDetailViewState.Success -> {
             val photo = currentState.photo
-            Photo(photoUIModel = photo, navigateUp = navigateUp)
+            Photo(
+                animatedVisibilityScope = animatedVisibilityScope,
+                photoUIModel = photo,
+                navigateUp = navigateUp
+            )
         }
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-private fun Photo(
+private fun SharedTransitionScope.Photo(
+    animatedVisibilityScope: AnimatedVisibilityScope,
     photoUIModel: PhotoUIModel,
     navigateUp: () -> Unit
 ) {
@@ -52,11 +63,17 @@ private fun Photo(
         modifier = Modifier.fillMaxSize()
     ) {
         LoadNetworkImage(
-            imageUrl = photoUIModel.fullImageUrl,
+            photoUIModel = photoUIModel,
             contentDescription = "Full Photo",
             placeHolderEnabled = false,
-            modifier = Modifier.fillMaxSize(),
-            showAnimProgress = false
+            modifier = Modifier
+                .fillMaxSize()
+                .sharedElement(
+                    state = rememberSharedContentState(
+                        key = "image-${photoUIModel.id}"
+                    ),
+                    animatedVisibilityScope = animatedVisibilityScope
+                )
         )
 
         IconButton(

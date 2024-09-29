@@ -8,12 +8,12 @@ import com.unsplash.stockwalls.domain.contract.repository.PhotosRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
-import dagger.hilt.android.scopes.ViewModelScoped
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineDispatcher
 
 @Module
-@InstallIn(ViewModelComponent::class)
+@InstallIn(SingletonComponent::class)
 object RepositoryModule {
 
     @Provides
@@ -30,9 +30,9 @@ object RepositoryModule {
         )
     }
 
+    @Singleton
     @Provides
-    @ViewModelScoped
-    fun providePhotoListRepository(
+    fun providePhotoRepository(
         unsplashApi: UnsplashApi,
         unsplashPagingSource: UnsplashPagingSource,
         pagingConfig: PagingConfig,

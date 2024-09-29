@@ -20,6 +20,7 @@ activityCompose = "1.9.2"
 lifecycleViewModelCompose = "2.8.6"
 lifecycleRuntimeCompose = "2.8.6"
 composeNavigation = "2.8.1"
+animationCompose = "1.7.2"
 
 # Networking Libraries
 retrofit = "2.9.0"
@@ -79,6 +80,7 @@ lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel
 lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleRuntimeCompose" }
 navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "composeNavigation" }
 hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version = "1.2.0" }
+androidx-animation = { group = "androidx.compose.animation", name = "animation", version.ref = "animationCompose" }
 
 # Networking Libraries
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }

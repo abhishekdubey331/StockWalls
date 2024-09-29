@@ -7,29 +7,25 @@ import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.unsplash.stockwalls.R
+import com.unsplash.stockwalls.ui.mapper.PhotoUIModel
 
 @Composable
 fun LoadNetworkImage(
-    imageUrl: String?,
+    photoUIModel: PhotoUIModel,
     contentDescription: String,
     modifier: Modifier = Modifier,
-    placeHolderEnabled: Boolean = true,
-    showAnimProgress: Boolean = true,
-    onSuccess: (() -> Unit)? = null,
-    onError: (() -> Unit)? = null
+    placeHolderEnabled: Boolean = true
 ) {
+    val context = LocalContext.current
+
     AsyncImage(
-        model = ImageRequest.Builder(LocalContext.current).data(imageUrl).apply {
-            if (showAnimProgress) {
-                crossfade(true)
-            }
+        model = ImageRequest.Builder(context).data(photoUIModel.regularImageUrl).apply {
             if (placeHolderEnabled) {
                 placeholder(R.drawable.placeholder)
             }
-            listener(
-                onSuccess = { _, _ -> onSuccess?.invoke() },
-                onError = { _, _ -> onError?.invoke() }
-            )
+            listener(onSuccess = { _, _ ->
+                // no-op
+            })
         }.build(),
         contentDescription = contentDescription,
         modifier = modifier,

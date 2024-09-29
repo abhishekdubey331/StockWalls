@@ -1,5 +1,7 @@
 package com.unsplash.stockwalls.data.repository.impl
 
+import android.util.Log
+import android.util.LruCache
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.map
@@ -7,6 +9,7 @@ import com.unsplash.stockwalls.api.UnsplashApi
 import com.unsplash.stockwalls.data.repository.paging.UnsplashPagingSource
 import com.unsplash.stockwalls.di.IoDispatcher
 import com.unsplash.stockwalls.domain.contract.repository.PhotosRepository
+import com.unsplash.stockwalls.ui.mapper.PhotoUIModel
 import com.unsplash.stockwalls.ui.mapper.toPhotoUIModel
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
@@ -21,15 +24,28 @@ class PhotosRepositoryImpl @Inject constructor(
     private val pagingConfig: PagingConfig
 ) : PhotosRepository {
 
+    private val photoCache = object : LruCache<String, PhotoUIModel>(500) {}
+
     override fun getPhotoList() = Pager(config = pagingConfig, pagingSourceFactory = {
         unsplashPagingSource
     }).flow.map { pagingData ->
         pagingData.map { photoDto ->
-            photoDto.toPhotoUIModel()
+            val photoUIModel = photoDto.toPhotoUIModel()
+            photoCache.put(photoUIModel.id, photoUIModel)
+            photoUIModel
         }
     }.flowOn(dispatcher)
 
     override fun getPhotoById(photoId: String) = flow {
-        emit(networkSource.getPhotoById(photoId).toPhotoUIModel())
-    }
+        val cachedPhoto = photoCache.get(photoId)
+        if (cachedPhoto != null) {
+            emit(cachedPhoto)
+            Log.d("PhotosRepositoryImpl", "getPhotoById: $photoId from cache")
+        } else {
+            val fetchedPhoto = networkSource.getPhotoById(photoId).toPhotoUIModel()
+            photoCache.put(photoId, fetchedPhoto)
+            Log.d("PhotosRepositoryImpl", "getPhotoById: $photoId from network")
+            emit(fetchedPhoto)
+        }
+    }.flowOn(dispatcher)
 }

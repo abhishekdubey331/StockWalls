@@ -1,4 +1,4 @@
-package com.unsplash.stockwalls.ui.list.composables
+package com.unsplash.stockwalls.ui.list
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

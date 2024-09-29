@@ -7,13 +7,13 @@ import com.unsplash.stockwalls.data.model.UnsplashPhotoItemDto
 import javax.inject.Inject
 
 class UnsplashPagingSource @Inject constructor(
-    private val apiService: UnsplashApi
+    private val networkSource: UnsplashApi
 ) : PagingSource<Int, UnsplashPhotoItemDto>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, UnsplashPhotoItemDto> {
         return try {
             val page = params.key ?: 1
-            val response = apiService.getPhotoList(pageNo = page)
+            val response = networkSource.getPhotoList(pageNo = page)
             LoadResult.Page(
                 data = response,
                 prevKey = if (page == 1) null else page - 1,

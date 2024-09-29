@@ -1,9 +1,9 @@
 package com.unsplash.stockwalls.ui.mapper
 
 import android.os.Parcelable
-import androidx.compose.runtime.Immutable
 import com.unsplash.stockwalls.data.model.UnsplashPhotoItemDto
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
 fun UnsplashPhotoItemDto.toPhotoUIModel(): PhotoUIModel {
     return PhotoUIModel(
@@ -18,8 +18,7 @@ fun UnsplashPhotoItemDto.toPhotoUIModel(): PhotoUIModel {
     )
 }
 
-@Immutable
-@Parcelize
+@Serializable
 data class PhotoUIModel(
     val id: String,
     val description: String?,
@@ -29,9 +28,8 @@ data class PhotoUIModel(
     val likeCount: Int,
     val photographerName: String,
     val photographerImageUrl: String
-) : Parcelable
+)
 
-@Immutable
 @Parcelize
 data class UserUIModel(
     val name: String?,

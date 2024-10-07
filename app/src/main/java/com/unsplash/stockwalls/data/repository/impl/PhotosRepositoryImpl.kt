@@ -1,6 +1,5 @@
 package com.unsplash.stockwalls.data.repository.impl
 
-import android.util.Log
 import android.util.LruCache
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -11,11 +10,11 @@ import com.unsplash.stockwalls.di.IoDispatcher
 import com.unsplash.stockwalls.domain.contract.repository.PhotosRepository
 import com.unsplash.stockwalls.ui.mapper.PhotoUIModel
 import com.unsplash.stockwalls.ui.mapper.toPhotoUIModel
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
 class PhotosRepositoryImpl @Inject constructor(
     @IoDispatcher private val dispatcher: CoroutineDispatcher,
@@ -40,11 +39,9 @@ class PhotosRepositoryImpl @Inject constructor(
         val cachedPhoto = photoCache.get(photoId)
         if (cachedPhoto != null) {
             emit(cachedPhoto)
-            Log.d("PhotosRepositoryImpl", "getPhotoById: $photoId from cache")
         } else {
             val fetchedPhoto = networkSource.getPhotoById(photoId).toPhotoUIModel()
             photoCache.put(photoId, fetchedPhoto)
-            Log.d("PhotosRepositoryImpl", "getPhotoById: $photoId from network")
             emit(fetchedPhoto)
         }
     }.flowOn(dispatcher)

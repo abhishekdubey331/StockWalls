@@ -98,6 +98,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v3
         with:
+          retention-days: 3
           name: unit-test-results
           path: '**/build/test-results/testDebugUnitTest/'
 
@@ -133,5 +134,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v3
         with:
+          retention-days: 3
           name: lint-results
           path: '**/build/reports/lint-results.xml'
